@@ -14,6 +14,9 @@ public class Personatge extends Entitat implements Serializable {
     private HashMap<String,Integer> monstresEliminats;
     private HashMap<String, Integer[]> estadistiquesDany;
 
+    private ArrayList<Arma> inventariArmes;
+    private Arma armaEquipada;
+
     public Personatge(String nom, int atac, int defensa, double vidaMax) {
         super(nom, atac, defensa, vidaMax);
         nivell = 1;

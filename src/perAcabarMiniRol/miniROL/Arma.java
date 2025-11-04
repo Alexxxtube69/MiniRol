@@ -1,40 +1,57 @@
 package perAcabarMiniRol.miniROL;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Arma {
 
-    private static int dauArma;
-    private final static int dauAtac = 10;
+    private String nom;
     private String descripcio;
-    private int raca;
+    private int dauArma;
+    private ArrayList<String> races;
+    private boolean esTrencada = false;
 
-    public static int getDauArma() {
-        return dauArma;
-    }
-
-    public void setDauAtac(int dauAtac) {
-        this.dauArma = dauAtac;
+    public Arma(String nom, String descripcio, int dauArma, ArrayList<String> races) {
+        this.nom = nom;
+        this.descripcio = descripcio;
+        this.dauArma = dauArma;
+        this.races = new ArrayList<>(races);
     }
 
     public String getDescripcio() {
         return descripcio;
     }
 
-    public void setDescripcio(String descripcio) {
-        this.descripcio = descripcio;
+    public int getDauArma() {
+        return dauArma;
     }
 
-    public int getRaca() {
-        return raca;
+    public String getNom() {
+        return nom;
     }
 
-    public void setRaca(int raca) {
-        this.raca = raca;
+    public boolean racaUtilitzable(String raca) {
+        return races.contains(raca.toLowerCase());
     }
 
-    public static int getDauAtac() {
-        return dauAtac;
+    public boolean estaTrencada() {
+        return esTrencada;
+    }
+
+    public void trencar() {
+        esTrencada = true;
+    }
+
+
+
+    public int tirarDau20(){
+        Random rnd = new Random();
+        return rnd.nextInt(20) + 1;
+    }
+
+    public int tirarDauArma() {
+        Random rnd = new Random();
+        return rnd.nextInt(dauArma) + 1;
     }
 
 }
