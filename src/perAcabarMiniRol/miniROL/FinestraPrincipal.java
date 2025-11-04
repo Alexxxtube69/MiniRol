@@ -16,6 +16,7 @@ public class FinestraPrincipal {
     private JLabel etImatge;
 
     private JButton botExplorar, botBotiga, botoTriaClasse;
+    private JButton botGuaraInfo,botMostraInfo;
 
     private Personatge pj;
 
@@ -77,6 +78,8 @@ public class FinestraPrincipal {
         panellInferior.add(botExplorar);
         panellInferior.add(botBotiga);
         panellInferior.add(botoTriaClasse);
+        panellInferior.add(botGuaraInfo);
+        panellInferior.add(botMostraInfo);
 
         panellPrincipal.add(panellSuperior, BorderLayout.NORTH);
         panellPrincipal.add(panellInferior, BorderLayout.SOUTH);
