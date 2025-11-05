@@ -1,0 +1,7 @@
+Espasa curta;Arma lleugera;4;huma,elf;10
+Daga;Petita però ràpida;3;huma,elf,nan,orc;10
+Destral pesada;Dura i letal;8;orc,nan;30
+Arc llarg;Perfecte per distància;6;elf;25
+Martell de guerra;Força pura;10;nan;50
+Espasa llarga;Clàssica i efectiva;6;huma,elf;35
+

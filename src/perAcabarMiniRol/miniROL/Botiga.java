@@ -2,6 +2,7 @@ package perAcabarMiniRol.miniROL;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Botiga {
 
@@ -9,6 +10,8 @@ public class Botiga {
 
     private JPanel panellPrinicpal, panellSuperior, panellInferior, panellBotiga;
     private JPanel panellEspasa, panellEscut, panellPocio, panellMapa;
+
+    private ArrayList<Arma> armesDisponibles;
 
     private JLabel imatgeEspasa, imatgeEscut, imatgePocio, imatgeMapa;
     private JLabel desEspasa, desEscut, desPocio, desMapa;
@@ -27,6 +30,8 @@ public class Botiga {
         pj = fp.getPj();
 
         marc =  new JDialog();
+
+        armesDisponibles = CarregadorArmes.carregarArmes("src/perAcabarMiniRol/miniROL/armes.txt");
 
         panellPrinicpal = new JPanel(new BorderLayout());
         panellSuperior = fp.getPanellSuperior();
@@ -75,6 +80,19 @@ public class Botiga {
 
         panellPrinicpal.add(panellBotiga, BorderLayout.CENTER);
 
+        JPanel panellArmes = new JPanel();
+        panellArmes.setLayout(new BoxLayout(panellArmes, BoxLayout.Y_AXIS));
+
+        for (Arma a : armesDisponibles) {
+
+            JButton boto = new JButton("Comprar " + a.getNom() + " (d" + a.getDauArma() + ") - " + a.getPreu() + " or");
+
+            boto.addActionListener(e -> comprarArma(a));
+
+            panellArmes.add(boto);
+        }
+
+        panellPrinicpal.add(panellArmes, BorderLayout.WEST);
 
 
         //Preparar panell inferior
@@ -86,6 +104,25 @@ public class Botiga {
         marc.setLocationRelativeTo(null);
         marc.setModal(true);
         marc.add(panellPrinicpal);
+
+    }
+
+    private void comprarArma(Arma arma) {
+
+        int preu = arma.getPreu(); // preu senzill
+
+        if (pj.getOr() < preu) {
+            JOptionPane.showMessageDialog(marc, "No tens prou or!");
+            return;
+        }
+
+        pj.setOr(pj.getOr() - preu);
+        fp.getEtOr().setText(" Or: " + pj.getOr());
+
+        pj.afegirArma(arma);
+
+        JOptionPane.showMessageDialog(marc,
+                "Has comprat " + arma.getNom() + "\nAra està al teu inventari");
 
     }
 

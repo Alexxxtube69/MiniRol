@@ -10,12 +10,18 @@ public class Arma {
     private int dauArma;
     private ArrayList<String> races;
     private boolean esTrencada = false;
+    private int preu;
 
-    public Arma(String nom, String descripcio, int dauArma) {
+    public Arma(String nom, String descripcio, int dauArma, ArrayList<String> races, int preu) {
         this.nom = nom;
         this.descripcio = descripcio;
         this.dauArma = dauArma;
-        //this.races = new ArrayList<>(races);
+        this.races = new ArrayList<>(races);
+        this.preu = preu;
+    }
+
+    public int getPreu() {
+        return preu;
     }
 
     public String getDescripcio() {

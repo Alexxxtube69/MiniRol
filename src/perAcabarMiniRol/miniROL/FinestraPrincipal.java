@@ -34,7 +34,7 @@ public class FinestraPrincipal {
         etOr = new JLabel(" Or: "+ pj.getOr());
 
         etAtributs = new JLabel(" Atc:" + pj.getAtac()+ "| Def: "+ pj.getDefensa() + "| Agl: " + pj.getAgilitat());
-        //etArma = new JLabel("| Arma: " + pj.getArma());
+        etArma = new JLabel("| Arma: cap ");
         etImatge = new JLabel();
         botExplorar = new JButton("Explorar");
         botBotiga = new JButton("Botiga");
@@ -59,6 +59,7 @@ public class FinestraPrincipal {
         panellSuperior.add(etXp);
         panellSuperior.add(etOr);
         panellSuperior.add(etAtributs);
+        panellSuperior.add(etArma);
         //panellSuperior.add(etArma);
 
         //Pepito lvl:1 xp:10/25
@@ -81,7 +82,48 @@ public class FinestraPrincipal {
         panellPrincipal.add(panellSuperior, BorderLayout.NORTH);
         panellPrincipal.add(panellInferior, BorderLayout.SOUTH);
 
+        JButton botEquiparArma = new JButton("Equipar arma");
+        botEquiparArma.addActionListener(e -> equiparArma());
+        panellInferior.add(botEquiparArma);
+
         marc.add(panellPrincipal);
+
+
+    }
+
+    private void equiparArma() {
+
+        if (pj.getInventariArmes().isEmpty()) {
+            JOptionPane.showMessageDialog(marc, "No tens armes a l'inventari!");
+            return;
+        }
+
+        String[] noms = pj.getInventariArmes().stream()
+                .map(Arma::getNom)
+                .toArray(String[]::new);
+
+        String seleccionada = (String) JOptionPane.showInputDialog(
+                marc,
+                "Selecciona un arma per equipar:",
+                "Inventari",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                noms,
+                noms[0]
+        );
+
+        if (seleccionada == null) return;
+
+        for (Arma a : pj.getInventariArmes()) {
+            if (a.getNom().equals(seleccionada)) {
+
+                pj.setArmaEquipada(a);
+                JOptionPane.showMessageDialog(marc,
+                        "Has equipat: " + a.getNom());
+                etArma.setText(" Arma: " + a.getNom());
+                break;
+            }
+        }
 
 
     }

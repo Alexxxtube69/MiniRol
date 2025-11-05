@@ -117,6 +117,11 @@ public class Exploracio {
 
     private void intentarFugir() {
 
+        if (!enemic.isEstaViu()) {
+            marc.dispose();
+            return;
+        }
+
         if (esBoss) {
             infoExploracio.append("No pots fugir d'un BOSS!\n\n");
             return;
@@ -127,6 +132,7 @@ public class Exploracio {
 
         // Tirada enemic
         int tiradaMonstre = enemic.tirarDau20() + enemic.getAgilitat();
+
 
         infoExploracio.append("Intent de fugida!\n");
         infoExploracio.append("Tirada jugador (d20 + agilitat): " + tiradaJugador + "\n");

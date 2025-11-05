@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class Personatge extends Entitat implements Serializable {
 
     private int nivell, or, xp, xpNecessaria;
-    private String[] armes;
+    private ArrayList<Arma> inventariArmes = new ArrayList<>();
     private HashMap<String,Integer> monstresEliminats;
     private HashMap<String, Integer[]> estadistiquesDany;
 
@@ -18,26 +18,27 @@ public class Personatge extends Entitat implements Serializable {
     public int ultimDany = 0;
     private Arma armaEquipada;
 
-    private ArrayList<Arma> inventariArmes;
-
     public Personatge(String nom, int atac, int defensa, double vidaMax) {
         super(nom, atac, defensa, vidaMax);
         nivell = 1;
         or = 0;
         xp = 0;
         xpNecessaria = 10;
-        armes = new String[4];
 
         monstresEliminats = new HashMap<>();
         estadistiquesDany = new HashMap<>();
     }
 
-    public String[] getArmes() {
-        return armes;
+    public ArrayList<Arma> getInventariArmes() {
+        return inventariArmes;
     }
 
-    public void setArmes(String[] armes) {
-        this.armes = armes;
+    public void afegirArma(Arma a) {
+        inventariArmes.add(a);
+    }
+
+    public boolean potEquipar(Arma a) {
+        return a.racaUtilitzable(getNom().toLowerCase());
     }
 
     public int getNivell() {
