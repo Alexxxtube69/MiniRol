@@ -134,12 +134,14 @@ public class Exploracio {
 
         // RESULTAT
         if (tiradaJugador >= tiradaMonstre) {
-            infoExploracio.append("Has aconseguit FUGIR!\n\n");
-            marc.dispose();  // tanquem la finestra d'exploració
+            infoExploracio.append("Fugint...\n");
+
+            // Espera 1,5 segons abans de tancar (1500 ms)
+            new javax.swing.Timer(2500, e -> marc.dispose()).start();
         } else {
             infoExploracio.append("No aconsegueixes fugir! L'enemic t'ataca!\n\n");
 
-            // el monstre pega una vegada
+            // el monstre ataca una vegada
             enemic.atacar(pj);
 
             int damage = Math.max(1, enemic.getAtac() - pj.getDefensa());
