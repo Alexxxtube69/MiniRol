@@ -14,8 +14,11 @@ public class Personatge extends Entitat implements Serializable {
     private HashMap<String,Integer> monstresEliminats;
     private HashMap<String, Integer[]> estadistiquesDany;
 
-    private ArrayList<Arma> inventariArmes;
+    public int ultimaTirada = 0;
+    public int ultimDany = 0;
     private Arma armaEquipada;
+
+    private ArrayList<Arma> inventariArmes;
 
     public Personatge(String nom, int atac, int defensa, double vidaMax) {
         super(nom, atac, defensa, vidaMax);
@@ -81,4 +84,13 @@ public class Personatge extends Entitat implements Serializable {
     public HashMap<String, Integer[]> getEstadistiquesDany() {
         return estadistiquesDany;
     }
+
+    public Arma getArmaEquipada() {
+        return armaEquipada;
+    }
+
+    public void setArmaEquipada(Arma a) {
+        armaEquipada = a;
+    }
+
 }

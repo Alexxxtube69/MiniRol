@@ -11,11 +11,11 @@ public class Arma {
     private ArrayList<String> races;
     private boolean esTrencada = false;
 
-    public Arma(String nom, String descripcio, int dauArma, ArrayList<String> races) {
+    public Arma(String nom, String descripcio, int dauArma) {
         this.nom = nom;
         this.descripcio = descripcio;
         this.dauArma = dauArma;
-        this.races = new ArrayList<>(races);
+        //this.races = new ArrayList<>(races);
     }
 
     public String getDescripcio() {
@@ -40,13 +40,6 @@ public class Arma {
 
     public void trencar() {
         esTrencada = true;
-    }
-
-
-
-    public int tirarDau20(){
-        Random rnd = new Random();
-        return rnd.nextInt(20) + 1;
     }
 
     public int tirarDauArma() {

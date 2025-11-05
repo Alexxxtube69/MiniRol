@@ -40,7 +40,45 @@ public class Entitat implements IAtacable, Serializable {
     @Override
     public void atacar(IAtacable enemic) {
 
-        enemic.rebreFerida(atac);
+        if (!(this instanceof Personatge)){
+            enemic.rebreFerida(atac);
+            return;
+        }
+
+        Personatge pj = (Personatge) this;
+        Arma arma = pj.getArmaEquipada();
+
+        // Tirada d20
+        int d20 = tirarDau20();
+        pj.ultimaTirada = d20;
+
+        // PÍFIA
+        if (d20 == 1) {
+            pj.ultimDany = 0;
+            return;
+        }
+
+        // Tirada del dau de l'arma
+        int base;
+
+        if (arma != null) {
+            base = arma.tirarDauArma();
+        } else {
+            base = 1;  // si no té arma, fa 1 de dany
+        }
+
+        // CRÍTIC
+        if (d20 == 20) base *= 2;
+
+        // Defensa
+        Entitat e = (Entitat) enemic;
+        int danyFinal = base + pj.getAtac() - e.getDefensa();
+        if (danyFinal <= 0) danyFinal = 1;
+
+        pj.ultimDany = danyFinal;
+
+        // Aplicar dany real
+        enemic.rebreFerida(danyFinal);
 
     }
 
@@ -51,31 +89,18 @@ public class Entitat implements IAtacable, Serializable {
     @Override
     public void rebreFerida(int quantitat) {
         if (estaViu) {
-            int quantitatTotal = quantitat - defensa;
-            if (quantitatTotal <=0) quantitatTotal = 1;
-            vidaActual-=quantitatTotal;
+            vidaActual-=quantitat;
             if (vidaActual<=0) {
                 estaViu = false;
                 vidaActual = 0;
             }
         }
 
-        /*if (estaViu){
-            Random rnd = new Random();
-            int dau = rnd.nextInt(20) + 1;
-            int quantitatTotal;
+    }
 
-            if (dau == 20){
-                quantitatTotal = (quantitat * 2) - defensa;
-                System.out.println("Cop critic! El dau ha tret 20!");
-            }else if (dau == 1){
-                quantitatTotal = 0;
-                System.out.println("L'atac falla completament (dau = 1)");
-            }else {
-                quantitatTotal = Arma.getTirada(Arma.getDauArma());
-            }
-        }*/
-
+    public int tirarDau20(){
+        Random rnd = new Random();
+        return rnd.nextInt(20) + 1;
     }
 
 

@@ -92,7 +92,7 @@ public class Exploracio {
 
         //fem panell inferior
         botAtacar.addActionListener(e->atacar());
-        botFugir.addActionListener(e->marc.dispose());
+        botFugir.addActionListener(e->intentarFugir());
 
         panellInferior.add(botAtacar);
         panellInferior.add(new JLabel("          "));
@@ -115,34 +115,67 @@ public class Exploracio {
 
     }
 
+    private void intentarFugir() {
+
+        if (esBoss) {
+            infoExploracio.append("No pots fugir d'un BOSS!\n\n");
+            return;
+        }
+
+        // Tirada jugador
+        int tiradaJugador = pj.tirarDau20() + pj.getAgilitat();
+
+        // Tirada enemic
+        int tiradaMonstre = enemic.tirarDau20() + enemic.getAgilitat();
+
+        infoExploracio.append("Intent de fugida!\n");
+        infoExploracio.append("Tirada jugador (d20 + agilitat): " + tiradaJugador + "\n");
+        infoExploracio.append("Tirada monstre (d20 + agilitat): " + tiradaMonstre + "\n");
+
+        // RESULTAT
+        if (tiradaJugador >= tiradaMonstre) {
+            infoExploracio.append("Has aconseguit FUGIR!\n\n");
+            marc.dispose();  // tanquem la finestra d'exploració
+        } else {
+            infoExploracio.append("No aconsegueixes fugir! L'enemic t'ataca!\n\n");
+
+            // el monstre pega una vegada
+            enemic.atacar(pj);
+
+            int damage = Math.max(1, enemic.getAtac() - pj.getDefensa());
+
+            infoExploracio.append(enemic.getNom() + " et fa " + damage + " de mal.\n\n");
+
+            pj.establirVida(pj.getVidaActual());
+
+            if (!pj.isEstaViu()) {
+                derrota();
+            }
+        }
+
+    }
+
     private void atacar(){
 
         int damage;
         int danyFet = 0;
         int danyRebut = 0;
 
-        pj.atacar(enemic); //a l'interficie
-        infoExploracio.setText(infoExploracio.getText() + pj.getNom()
-                + " ataca amb una força de " + pj.getAtac() + ".\n");
+        // --- ATACA EL JUGADOR (TOT EL CÀLCUL ES FA A Entitat) ---
+        pj.atacar(enemic);
 
-        /*boolean tocar = false;
+        infoExploracio.append(
+                pj.getNom() + " tira un d20 i obté: " + pj.ultimaTirada + "\n"
+        );
 
-        if (Arma.getTirada(Arma.getDauArma()) + pj.getAtac() > enemic.getDefensa()){
-            tocar = true;
+        if (pj.ultimaTirada == 1) {
+            infoExploracio.append("PÍFIA! L'atac falla!\n\n");
+        } else {
+            infoExploracio.append("Dany causat: " + pj.ultimDany + "\n\n");
         }
-        if (!tocar){
-            System.out.println("L'atac no ha pogut superar l'armadura");
-        }else {
-            danyFet = Arma.getTirada(Arma.getDauArma());
-        }*/
 
-        damage = pj.getAtac() - enemic.getDefensa();
+        danyFet = pj.ultimDany;
 
-        if (damage <= 0) damage = 1;
-        danyFet = damage;
-
-        infoExploracio.setText(infoExploracio.getText() + enemic.getNom()
-                 + " ha rebut " + damage + " de mal gràcies a la seva defensa.\n\n" );
         enemic.establirVida(enemic.getVidaActual());
 
         if (!enemic.isEstaViu()) {
