@@ -34,7 +34,7 @@ public class FinestraPrincipal {
         etOr = new JLabel(" Or: "+ pj.getOr());
 
         etAtributs = new JLabel(" Atc:" + pj.getAtac()+ "| Def: "+ pj.getDefensa() + "| Agl: " + pj.getAgilitat());
-        etArma = new JLabel("| Arma: cap ");
+        etArma = new JLabel("| Arma: Per defecte");
         etImatge = new JLabel();
         botExplorar = new JButton("Explorar");
         botBotiga = new JButton("Botiga");
