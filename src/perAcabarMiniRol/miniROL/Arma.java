@@ -1,9 +1,10 @@
 package perAcabarMiniRol.miniROL;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Arma {
+public class Arma  implements Serializable {
 
     private String nom;
     private String descripcio;
